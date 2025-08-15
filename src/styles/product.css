@@ -1,0 +1,254 @@
+/* =========================
+   Product List
+   ========================= */
+.product-page{
+  padding: 2rem;
+  background:#f5f5f5;
+}
+
+/* ແຖວຟິວເລີ */
+.filter-row{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin: 8px 0 6px;
+}
+
+.filter-row input,
+.filter-row select{
+  flex:1 1 320px;
+  font-family: "NotoSansLao", sans-serif;
+  box-sizing:border-box;
+  height: 44px;            
+  line-height: 1.2;
+  padding: 10px 12px;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background:#fff;
+  outline:none;
+  transition:border-color .15s, box-shadow .15s;
+}
+.filter-row input:focus,
+.filter-row select:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 3px rgba(37,99,235,.15);
+}
+@media (max-width: 680px){
+  .filter-row{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:10px;
+  }
+  .filter-row input,
+  .filter-row select{
+    flex:auto;
+    width:100%;
+  }
+}
+
+/* ແຖບປຸ່ມ */
+.table-actions{
+  display:flex;
+  gap:10px;
+  justify-content:flex-end;
+  align-items:center;
+  margin: 20px 0 8px;
+  flex-wrap:wrap;
+}
+/* ປຸ່ມຖານ */
+.btnt{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:10px 14px;
+  border:0; border-radius:10px;
+  font-weight:700; font-size:14px;
+  cursor:pointer; text-decoration:none;
+  box-shadow:0 6px 16px rgba(0,0,0,.12);
+  transition: transform .12s ease, box-shadow .18s ease, background .18s ease, opacity .18s ease;
+  color:#fff;
+}
+.btn:hover{ transform: translateY(-1px); box-shadow:0 10px 20px rgba(0,0,0,.16); }
+.btn:active{ transform: translateY(0); }
+.btn:disabled{ opacity:.6; cursor:not-allowed; box-shadow:none; }
+.btn .icon{ font-size:18px; line-height:1; }
+
+/* ສີປຸ່ມ */
+.btn--search{ background:#1d4ed8; }    
+.btn--secondary{ background:#64748b; } 
+.btn--primary{ background:#14a44d;  margin-bottom: 8px;} 
+
+
+/* mobile ເລີຍແຕ່ໄອຄອນ */
+@media (max-width: 640px){
+  .table-actions{ justify-content:flex-end; }
+  .btnt{ border-radius:999px; padding:10px; }
+  .btnt span{ display:none; }
+}
+
+/* ตารางสินค้า */
+.product-table{
+  width:100%;
+  border-collapse: collapse;
+  background:#fff;
+  margin-top: 10px;
+  border-radius:12px;
+  overflow:hidden;
+}
+.product-table thead th{
+  background:#e6edf6; 
+  color:#111;
+  font-weight:700;
+  text-align:left;
+  padding:.85rem .9rem;
+  border-bottom:1px solid #e5e7eb;
+  white-space:nowrap;
+}
+.product-table td{
+  padding:.75rem .9rem;
+  border-bottom:1px solid #eef0f2;
+  vertical-align:middle;
+  color:#111;
+}
+.product-table tbody tr:hover{ background:#f9fbff; }
+
+/* ปุ่มดูรายละเอียดในตาราง */
+.detail-btn{
+  background:#6b7280; color:#fff; border:0;
+  width:34px; height:34px; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  box-shadow:0 6px 16px rgba(0,0,0,.12);
+  transition:transform .12s, box-shadow .18s, background .18s;
+}
+.detail-btn:hover{ transform: translateY(-1px); box-shadow:0 10px 20px rgba(0,0,0,.16); background:#4b5563; }
+
+/* ถ้าคุณจะแสดงรูปตัวอย่างในคอลัมน์ */
+.prod-thumb{
+  width:72px; height:72px; border-radius:10px; object-fit:cover; background:#f3f4f6;
+  display:block;
+}
+
+/* =========================
+   Product Add (หน้าเพิ่มสินค้า)
+   ========================= */
+.product-add-page .card{
+  background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.06); margin-top: 10px;
+}
+.product-add-page .card__header{
+  padding:12px 16px; border-bottom:1px solid #e5e7eb;
+}
+.pad-16{ padding:16px; }
+
+/* link page back */
+.product-add-page .link-back{
+  font-size:14px; color:#887d67;
+  display:flex; align-items:center; gap:4px;
+  justify-content:flex-end;
+
+}
+.product-add-page .link-back a{
+  color:#f2aa2d; text-decoration:none; font-weight:600;
+  transition:color .15s ease;
+}
+.product-add-page .link-back a:hover{ color:#1d4ed8; }
+
+
+/* ฟิลด์ฟอร์ม */
+.product-add-page .field{
+  display:flex; flex-direction:column; gap:6px; margin-bottom:14px; padding-right:20px;
+}
+.product-add-page .field > label{ font-weight:700; color:#374151; line-height:1.35; }
+.req{ color:#dc2626; }
+
+.product-add-page input,
+.product-add-page select,
+.product-add-page textarea{
+  width:100%;
+  font-size:14px;
+  font-family:"NotoSansLao", sans-serif;
+  padding:10px 12px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  background:#fff;
+  outline:none;
+  transition:border-color .15s, box-shadow .15s;
+}
+.product-add-page textarea{ resize:vertical; min-height:90px; }
+.product-add-page input:focus,
+.product-add-page select:focus,
+.product-add-page textarea:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 3px rgba(37,99,235,.15);
+}
+.product-add-page input:disabled,
+.product-add-page select:disabled,
+.product-add-page textarea:disabled{
+  background:#f9fafb; color:#6b7280; cursor:not-allowed;
+}
+
+/* กริดฟอร์ม */
+.grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.grid-3{ display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; }
+.grid-4{ display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; }
+.col-2{ grid-column: span 2 / span 2; }
+
+@media (max-width: 980px){
+  .grid-4{ grid-template-columns: 1fr 1fr; }
+  .col-2{ grid-column:auto; }
+}
+@media (max-width: 820px){
+  .grid-3{ grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px){
+  .grid-2, .grid-3, .grid-4{ grid-template-columns: 1fr; }
+}
+
+/* radio / options */
+.radio-row{ display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+.radio-row input[type="radio"]{ accent-color:#2563eb; }
+
+/* tabs */
+.tabs{ display:flex; gap:8px; margin:10px 0 6px; }
+.tab{
+  border:0; background:transparent; padding:8px 10px;
+  border-bottom:2px solid transparent; cursor:default; font-weight:700; color:#6b7280;
+}
+.tab.active{ border-color:#2563eb; color:#1f2937; }
+
+/* อัปโหลดรูป */
+.uploader{
+  width:min(560px, 100%); min-height:150px;
+  border:2px dashed #e5e7eb; border-radius:12px; background:#f8fafc;
+  display:flex; align-items:center; justify-content:center; cursor:pointer;
+  transition: border-color .15s ease, background .15s ease;
+}
+.uploader:hover{ border-color:#cdd5df; background:#f3f6fb; }
+.uploader:focus-within{ border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.12); }
+.uploader-empty{ color:#6b7280; padding:28px 10px; font-weight:600; text-align:center; }
+.thumb-lg{ width:100%; max-width:520px; height:auto; border-radius:12px; display:block; object-fit:cover; background:#fff; }
+
+/* validate */
+.err-box{
+  color:#b91c1c; background:#fee2e2;
+  border:1px solid #fecaca; border-radius:8px; padding:10px 12px; margin-top:6px;
+}
+.is-error input, .is-error select, .is-error textarea{
+  border-color:#ef4444;
+  box-shadow:0 0 0 3px rgba(239,68,68,.12);
+}
+
+/* ปุ่มในฟอร์มเพิ่มสินค้า */
+.actions{ margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; }
+.btn-primary{
+  background:#14a44d; color:#fff; border:0; border-radius:8px;
+  padding:10px 14px; cursor:pointer; font-weight:600;
+  transition: transform .06s ease, box-shadow .15s ease;
+}
+.btn-primary:hover{ box-shadow:0 6px 16px rgba(20,164,77,.25); transform: translateY(-1px); }
+.btn-primary:active{ transform: translateY(0); }
+.btn-secondary{
+  background:#e5e7eb; color:#111; border:0; border-radius:8px;
+  padding:10px 14px; cursor:pointer; font-weight:600;
+}
+.btn-secondary:hover{ background:#dfe3e7; }

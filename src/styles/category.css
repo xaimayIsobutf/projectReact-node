@@ -1,0 +1,352 @@
+/* clear body for header fixed */
+body{
+  font-family:'NotoSansLao', sans-serif;
+  margin:0;
+  padding:20px;
+  padding-top: var(--header-h, 0);
+}
+
+.category-page{ padding:20px; background:#f9f9f9; }
+
+.header-row{ display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.add-btn{
+  background:#4CAF50; color:#fff; border:0; padding:8px 14px; border-radius:8px; cursor:pointer;
+}
+
+.table-wrap{
+  width: 100%;
+  overflow-x: auto;                 /* ให้เลื่อนแนวนอนได้ */
+  -webkit-overflow-scrolling: touch;
+  border-radius: 10px;
+}
+
+.category-table{
+  width:100%; 
+  border-collapse: collapse; 
+  margin-top:20px; background:#fff;
+  table-layout: fixed;  
+  min-width: 880px;         /* ใช้ fixed layout เพื่อให้คอลัมน์มีขนาดเท่าๆ กัน */
+}
+.category-table th, 
+.category-table td{
+  border:1px solid #ddd; 
+  padding:10px; 
+  text-align:center;
+  white-space:nowrap; 
+  overflow:hidden; 
+  text-overflow:ellipsis;
+}
+.category-table td.actions{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;              
+}
+.btn{
+  appearance:none;
+  -webkit-appearance:none;
+  border:1px solid transparent;
+  background:#fff;
+  color:#111;
+  font-weight:700;
+  font-size:14px;
+  line-height:1;
+  padding:10px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:background .15s ease, color .15s ease, border-color .15s ease,
+             box-shadow .15s ease, transform .06s ease;
+  box-shadow:0 1px 3px rgba(0,0,0,.06);
+}
+.btn:active{ transform:translateY(1px); }
+.btn:disabled{ opacity:.55; cursor:not-allowed; }
+
+.btn-edit{
+  border-color:#2563eb;
+  color:#2563eb;
+  background:#fff;
+}
+.btn-edit:hover{
+  background:#2563eb;
+  color:#fff;
+  box-shadow:0 4px 12px rgba(37,99,235,.25);
+}
+
+.btn-danger{
+  border-color:#ef4444;
+  color:#ef4444;
+  background:#fff;
+}
+.btn-danger:hover{
+  background:#ef4444;
+  color:#fff;
+  box-shadow:0 4px 12px rgba(239,68,68,.25);
+}
+@media (max-width: 640px){
+  .category-table{
+    border: 0;
+    min-width: 0;                 
+  }
+  .category-table thead{
+    display: none;                  
+  }
+  .category-table,
+  .category-table tbody,
+  .category-table tr,
+  .category-table td{
+    display: block;
+  }
+  .category-table tr{
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.06);
+    margin: 12px 0;
+    overflow: hidden;
+  }
+  .category-table td{
+    border: 0;
+    border-bottom: 1px dashed #e5e7eb;
+    padding: 12px 14px;
+    text-align: center;            
+    white-space: normal;           
+  }
+  .category-table td:last-child{
+    border-bottom: 0;
+  }
+  .category-table td::before{
+    content: attr(data-label);      
+    float: left;
+    font-weight: 700;
+    color: #4b5563;
+  }
+  .category-table td.actions{
+    display: flex;
+    justify-content: flex;
+    gap: 20px;
+    padding: 12px 14px 14px;
+  }
+  .edit-btn{ padding: 7px 10px; }
+}
+
+@media (max-width: 768px){
+  .header-row{ gap: 10px; }
+  .add-btn{ padding: 8px 12px; }
+}
+/* Modal */
+.modal-overlay{
+  position:fixed; inset:0; background: rgba(0,0,0,.3);
+  display:flex; justify-content:center; align-items:center;
+}
+.modal{ background:#fff; padding:20px; border-radius:8px; width: min(520px, 92vw); }
+.modal input{ display:block; width:100%; padding:8px; margin:10px 0; }
+.modal-actions{ display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+
+/* ===========================
+   Add Category – full stylesheet
+   (scoped to .cat-create only)
+   =========================== */
+
+.cat-create{
+  /* Theme & layout variables */
+  --bg: #f5f5f5;
+  --card: #fff;
+  --line: #e5e7eb;
+  --text: #111827;
+  --muted: #6b7280;
+  --brand: #13a34b;
+  --back: #ffb700;
+  --brand-dark: #0f8b3f;
+  --danger: #dc2626;
+
+  /* Size presets */
+  --label-col-w: 240px;   /* ความกว้างคอลัมน์ label */
+  --field-w: 680px;       /* ความกว้างสูงสุดของชุดช่องกรอก */
+  --btn-w: 200px;         /* ความกว้างปุ่มให้เท่ากัน */
+}
+
+.cat-create *{ box-sizing: border-box; }
+
+/* ถ้า element ภายนอกไม่มี padding ให้หน้าโล่งๆ นิดหน่อย */
+.cat-create{ padding: 20px; }
+
+/* ===== Page topbar / breadcrumb ===== */
+.cat-create .page__topbar{
+  position: sticky;
+  top: 10px;
+  background: #f9fafb;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  grid-template-areas: "back title breadcrumb";
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  z-index: 5;
+}
+
+.cat-create .back{
+  grid-area: back;
+  width: 40px; height: 40px;
+  border: none; background: #fff;
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #374151; cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+
+.cat-create .page__title{
+  margin: 0; font-size: 22px; font-weight: 800; color: var(--text);grid-area: title;
+}
+
+.cat-create .breadcrumb{
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; color: var(--muted);
+  grid-area: breadcrumb;
+  justify-self: end;
+}
+.cat-create .breadcrumb .sep{ opacity:.7; }
+.cat-create .breadcrumb .current{ color: var(--text); font-weight: 600; }
+.cat-create .breadcrumb .crumb--accent{
+  color: var(--back); cursor: pointer;
+  transition: color .15s ease;
+}
+
+@media (max-width: 680px){
+  .cat-create .page__topbar{
+    grid-template-columns: 40px 1fr;
+    grid-template-areas:
+      "back title"
+      "breadcrumb breadcrumb";
+    row-gap: 8px;
+  }
+  .cat-create .back{ width: 36px; height: 36px; }
+  .cat-create .breadcrumb{
+    justify-self: start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* กันล้น */
+  }
+}
+/* ===== Card & form ===== */
+.cat-create .card{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  padding: 24px;
+  margin-top: 16px;
+}
+
+.cat-create .form{
+  max-width: var(--field-w);
+  margin: 28px auto 0;
+}
+
+/* แถว label + control */
+.cat-create .row{
+  display: grid;
+  grid-template-columns: var(--label-col-w) 1fr;
+  gap: 18px;
+  align-items: center;              /* จัดให้อยู่ระดับเดียวกัน */
+  margin-bottom: 16px;
+}
+
+.cat-create .label{
+  font-weight: 700; color:#374151;
+  padding: 0;                       /* ไม่ดัน label ให้ลอยขึ้น */
+  display: flex; align-items: center; gap: 6px;
+}
+
+.cat-create .req{ color: var(--danger); }
+
+.cat-create .control{
+  width: 100%;
+  max-width: var(--field-w);
+}
+
+/* ===== Inputs (select/input/textarea) ===== */
+.cat-create .input,
+.cat-create select,
+.cat-create textarea{
+  font-family: var(--font-lao);
+  width: 100%;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .12s ease, box-shadow .12s ease;
+}
+
+.cat-create .input:focus,
+.cat-create select:focus,
+.cat-create textarea:focus{
+  border-color: #9ca3af;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.10);
+}
+
+.cat-create .input.invalid,
+.cat-create select.invalid,
+.cat-create textarea.invalid{
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239,68,68,.10);
+}
+
+.cat-create .w-160{ max-width: 160px; }
+.cat-create .error{ color:#b91c1c; font-size:12px; margin-top:6px; }
+
+/* ===== Actions (Buttons) ===== */
+.cat-create .actions{
+  max-width: var(--field-w);
+  margin: 22px auto 0;
+  display: flex; gap: 12px; justify-content: center;
+}
+
+.cat-create .btn-primary,
+.cat-create .btn-secondary{
+  width: var(--btn-w);
+  min-width: var(--btn-w);
+  padding: 12px 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 800;
+  text-align: center;
+  cursor: pointer;
+}
+
+.cat-create .btn-primary{
+  background: var(--brand); color:#fff;
+  box-shadow: 0 2px 6px rgba(19,163,75,.25);
+}
+.cat-create .btn-primary:hover{ background: var(--brand-dark); }
+
+.cat-create .btn-secondary{
+  background:#e5e7eb; color:#111;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 960px){
+  .cat-create .row{
+    grid-template-columns: 1fr;      /* label อยู่บรรทัดบน input */
+  }
+  .cat-create .actions{
+    max-width: 100%;
+  }
+  .cat-create .btn-primary,
+  .cat-create .btn-secondary{
+    width: 50%;
+    min-width: 140px;
+  }
+}
+/* ==small moblie */
+@media (max-width: 420px){
+  .cat-create .page__title{ font-size: 18px; }
+  .cat-create .breadcrumb{ font-size: 12px; }
+  .cat-create .page__topbar{ top: 6px; } /* sticky offset เล็กลง */
+}

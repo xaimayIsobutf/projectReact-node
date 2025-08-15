@@ -1,0 +1,28 @@
+/* src/styles/fonts.css */
+@font-face {
+  font-family: "NotoSansLao";
+  src: url("../assets/fonts/NotoSansLao/noto-sans-lao-lao-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;   /* Noto Sans Lao ส่วนมากไม่มี italic */
+  font-display: swap;   /* โหลดเร็ว ไม่ค้างตัวอักษร */
+}
+
+@font-face {
+  font-family: "NotoSansLao";
+  src: url("../assets/fonts/NotoSansLao/noto-sans-lao-lao-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-lao: "NotoSansLao", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-lao);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
