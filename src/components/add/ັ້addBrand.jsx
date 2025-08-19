@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../../styles/category.css"; // ใช้ไฟล์เดิม โดยเราจะใส่ class prefix = brand-create
+import "../../styles/brands.css"; // ใช้ไฟล์เดิม โดยเราจะใส่ class prefix = brand-create
 import { createBrand } from "../../api/brands";
 
 const MAX_PRIORITY = 1_000_000;

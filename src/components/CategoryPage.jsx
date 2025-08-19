@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "../styles/category.css";
 import {
   listCategories,
-  updateCategory,
   deleteCategory,
 } from "../api/categories";
 import { listWarehouses } from "../api/warehouses";
@@ -11,17 +10,7 @@ import { listWarehouses } from "../api/warehouses";
 const CategoryPage = () => {
   const [categories, setCategories] = useState([]);
   const [warehouses, setWarehouses] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false); // ใช้เฉพาะแก้ไข
-  const [formData, setFormData] = useState({
-    name_lo: "",
-    name_en: "",
-    priority: "",
-    warehouse_id: "",
-  });
-  const [isEditMode, setIsEditMode] = useState(false); // true เมื่อแก้ไข
-  const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
   const [err, setErr] = useState("");
 
   const warehouseMap = useMemo(() => {
@@ -48,41 +37,7 @@ const CategoryPage = () => {
     fetchAll();
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((s) => ({ ...s, [name]: value }));
-  };
-
-  // ใช้เฉพาะแก้ไข
-  const handleUpdateSubmit = async (e) => {
-    e.preventDefault();
-    if (!isEditMode || !editingId) return;
-    setSaving(true);
-    setErr("");
-    try {
-      await updateCategory(editingId, formData);
-      await fetchAll();
-      setModalVisible(false);
-      setIsEditMode(false);
-      setEditingId(null);
-    } catch (e) {
-      setErr(e.message || "ບໍ່ສາມາດບັນທຶກໄດ້");
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const openEditModal = (cat) => {
-    setFormData({
-      name_lo: cat.name_lo || "",
-      name_en: cat.name_en || "",
-      priority: cat.priority ?? "",
-      warehouse_id: String(cat.warehouse_id || ""),
-    });
-    setIsEditMode(true);
-    setEditingId(cat.id);
-    setModalVisible(true);
-  };
+ 
 
   const onDelete = async (cat) => {
     if (!window.confirm(`ລຶບໝວດໝູ່ “${cat.name_lo || cat.name_en}” ?`)) return;
@@ -137,13 +92,11 @@ const CategoryPage = () => {
             <td data-label="ລຳດັບຄວາມສຳຄັນ">{cat.priority ?? "-"}</td>
             <td data-label="ຈຳນວນຂອງສິນຄ້າ">{cat.product_count ?? "-"}</td>
             <td data-label="ຈັດການ" className="actions">
-              <button
-                type="button"
-                className="btn btn-edit"
-                onClick={() => openEditModal(cat)}
-                title="ແກ້ໄຂ"
-              >
+
+              <button type="button" className="btn btn-edit" >
+                <Link to={`/categories/${cat.id}/edit`} title="ແກ້ໄຂ">
                 ແກ້ໄຂ
+                </Link>
               </button>
               <button
                 type="button"
@@ -160,33 +113,6 @@ const CategoryPage = () => {
           </tbody>
         </table>
       </div>
-
-      {/* โมดัลเฉพาะแก้ไข */}
-      {modalVisible && isEditMode && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h3>ແກ້ໄຂໝວດໝູ່ສິນຄ້າ</h3>
-
-            <form onSubmit={handleUpdateSubmit}>
-              <input type="text" name="name_lo" placeholder="ຊື່ພາສາລາວ" value={formData.name_lo} onChange={handleChange} required />
-              <input type="text" name="name_en" placeholder="ຊື່ພາສາອັງກິດ" value={formData.name_en} onChange={handleChange} required />
-              <input type="number" name="priority" placeholder="ລຳດັບຄວາມສຳຄັນ" value={formData.priority} onChange={handleChange} />
-
-              <select name="warehouse_id" value={formData.warehouse_id} onChange={handleChange} required>
-                <option value="">-- ເລືອກຄັງສິນຄ້າ --</option>
-                {warehouses.map((wh) => (
-                  <option key={wh.id} value={wh.id}>{wh.name}</option>
-                ))}
-              </select>
-
-              <div className="modal-actions">
-                <button type="submit" disabled={saving}>{saving ? "ກຳລັງບັນທຶກ..." : "ບັນທຶກການແກ້ໄຂ"}</button>
-                <button type="button" onClick={() => setModalVisible(false)}>ຍົກເລີກ</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
